@@ -1,0 +1,16 @@
+<div class="row">
+    <div class="col">
+      <input type="button" (click)="toggleHideText()" value="Display Details">
+    </div>
+    <div class="col" >
+      <p [hidden]="hideText"> text text text text text text text text text text text text text text text text text text text <br> text text text text text <br> text text text text text text text text text <br> text text text text text text text text text text text <br> text text text text text text text text text text text text text text text text text text text text <br> text text <br> text text text text text text text text text text text text <br> text text text text text text text text text text text text text text text text text text <br> text text text <br> text text text text text text text text text text text <br> text text text text text text text text text text text <br> text text text text text text text text text text text <br> text text text text text text text text text text text <br> text text text text text text text text text text text <br> text text text text text text text text text text text <br> text text text text text text text text text text text text text text text text text text text text <br> text text <br> text text text text text text text text text text text <br>
+        </p>
+    </div>
+    <div class="col"
+      [ngStyle]="{ 'color': getColor(click) }"
+      [ngClass]="{'afterFive': blueTime != 0 && click > blueTime}"
+      *ngFor="let click of button_clicks; let i = index"> {{ i }} : {{click}}
+    </div>
+
+</div>
+

@@ -8,9 +8,35 @@
 <button class="btn btn-primary" [disabled]="!allowNewServer" (click)="onCreateServer()" >Add Button</button>
 <!--<p [innerText]="allowNewServer"></p>-->
 <!-- <p>{{ serverCreationStatus }}</p> -->
-<p *ngIf="serverCreated" > The server was created, server name is {{ serverName }}</p>
+<p *ngIf="serverCreated" > {{serverCreationStatus}} </p>
 <!-- <ng-template #noServer >
   <p>No server was created</p>
 </ng-template> -->
 <app-server *ngFor="let server of servers"></app-server>
+
+<input type="button" (click)="onToggleText()" class="btn btn-primary" value="Display Details">
+<p [hidden]="hideText">This is content in a p element. This is just test text. Who lives in a pinneapple under the sea?
+  (Spongebob! Squarepants!)
+  Absobant and yellow and pourous is he?
+  (Spongebob! Squarepants!)
+  Who's nautical nonsense be something you wish?
+  (Spongebob! Squarepants!)
+  So drop on the deck snd flop like a fish!
+  (Spongebob! Squarepants!)
+  Ready?
+  (Spongebob! Squarepants!)
+  (Spongebob! Squarepants!)
+  (Spongebob! Squarepants!)
+  (Spongebob Squarepants!)</p>
+
+<!-- <div class="container">
+    <div class="row">
+        <div class="col">
+            this is some text
+        </div>
+      <div class="col">
+          this is some alternate text
+        </div>
+      </div>
+</div> -->
 
