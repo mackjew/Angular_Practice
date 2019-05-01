@@ -6,4 +6,10 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
+  public allNumbers: number[] = [];
+
+  catchNumber(newNumber: { newNum: number }) {
+    console.log(newNumber.newNum);
+    this.allNumbers.push(newNumber.newNum);
+  }
 }
