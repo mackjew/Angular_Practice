@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
+import {Routes, RouterModule} from '@angular/router';
 
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
@@ -11,6 +12,15 @@ import { UserComponent } from './users/user/user.component';
 import { EditServerComponent } from './servers/edit-server/edit-server.component';
 import { ServerComponent } from './servers/server/server.component';
 import { ServersService } from './servers/servers.service';
+
+//This is where we declare routes for the angular app.
+//Declared as const because it shouldn't be a dynamic thing. Won't ever change outside of development.
+const appRoutes: Routes = [
+  {path: 'users', component: UsersComponent}, //does not need slashes in the prefix of the route
+  {path: 'users/:id/:name', component: UserComponent},
+  {path: '', component: HomeComponent},
+  {path: 'servers', component: ServersComponent},
+];
 
 @NgModule({
   declarations: [
@@ -25,7 +35,9 @@ import { ServersService } from './servers/servers.service';
   imports: [
     BrowserModule,
     FormsModule,
-    HttpModule
+    HttpModule,
+    RouterModule.forRoot(appRoutes) //This import and function call allows the Module RouterModule to register all the routes and associated
+    // components we want for our app
   ],
   providers: [ServersService],
   bootstrap: [AppComponent]
