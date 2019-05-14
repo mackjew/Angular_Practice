@@ -13,8 +13,9 @@ export class HomeComponent implements OnInit {
   ngOnInit() {
   }
 
-  onLoadServers() {
-    // complex calcs here then redirect
-    this.router.navigate(['/servers']);
+  onLoadServers(serverID: number) {
+    // this navigate function takes in a second arg in the form of a JS object. This object is can have config info
+    // such as 'relativeTo', 'queryParams', 'fragment', and others
+    this.router.navigate(['/servers', serverID, 'edit'], {queryParams: {allowEdit: 1}, fragment: "loading"});
   }
 }

@@ -16,10 +16,16 @@ import { ServersService } from './servers/servers.service';
 //This is where we declare routes for the angular app.
 //Declared as const because it shouldn't be a dynamic thing. Won't ever change outside of development.
 const appRoutes: Routes = [
-  {path: 'users', component: UsersComponent}, //does not need slashes in the prefix of the route
-  {path: 'users/:id/:name', component: UserComponent},
+  //does not need slashes in the prefix of the route
+  {path: 'users', component: UsersComponent, children: [
+    {path: ':id/:name', component: UserComponent},
+  ]},
+  {path: 'servers', component: ServersComponent,
+  children: [
+    {path: ':id', component: ServerComponent},
+    {path: ':id/edit', component: EditServerComponent}
+  ]},
   {path: '', component: HomeComponent},
-  {path: 'servers', component: ServersComponent},
 ];
 
 @NgModule({
