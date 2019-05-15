@@ -12,6 +12,7 @@ import { UserComponent } from './users/user/user.component';
 import { EditServerComponent } from './servers/edit-server/edit-server.component';
 import { ServerComponent } from './servers/server/server.component';
 import { ServersService } from './servers/servers.service';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
 //This is where we declare routes for the angular app.
 //Declared as const because it shouldn't be a dynamic thing. Won't ever change outside of development.
@@ -26,6 +27,8 @@ const appRoutes: Routes = [
     {path: ':id/edit', component: EditServerComponent}
   ]},
   {path: '', component: HomeComponent},
+  {path: 'not-found', component: PageNotFoundComponent},
+  {path: '**', redirectTo: '/not-found'} //make sure catch-all 404 route is bottom of the list.
 ];
 
 @NgModule({
@@ -36,7 +39,8 @@ const appRoutes: Routes = [
     ServersComponent,
     UserComponent,
     EditServerComponent,
-    ServerComponent
+    ServerComponent,
+    PageNotFoundComponent
   ],
   imports: [
     BrowserModule,
