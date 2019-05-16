@@ -1,19 +1,12 @@
-import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { HttpModule } from '@angular/http';
-import {Routes, RouterModule} from '@angular/router';
-
-import { AppComponent } from './app.component';
-import { HomeComponent } from './home/home.component';
+import { Routes, RouterModule } from '@angular/router';
 import { UsersComponent } from './users/users.component';
-import { ServersComponent } from './servers/servers.component';
 import { UserComponent } from './users/user/user.component';
-import { EditServerComponent } from './servers/edit-server/edit-server.component';
+import { ServersComponent } from './servers/servers.component';
 import { ServerComponent } from './servers/server/server.component';
-import { ServersService } from './servers/servers.service';
+import { EditServerComponent } from './servers/edit-server/edit-server.component';
+import { HomeComponent } from './home/home.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
-import { AppRoutingModule } from './app-routing.module';
 
 //This is where we declare routes for the angular app.
 //Declared as const because it shouldn't be a dynamic thing. Won't ever change outside of development.
@@ -33,24 +26,14 @@ const appRoutes: Routes = [
   {path: '**', redirectTo: '/not-found'} //make sure catch-all 404 route is bottom of the list.
 ];
 
-@NgModule({
-  declarations: [
-    AppComponent,
-    HomeComponent,
-    UsersComponent,
-    ServersComponent,
-    UserComponent,
-    EditServerComponent,
-    ServerComponent,
-    PageNotFoundComponent
-  ],
+@NgModule( {
   imports: [
-    BrowserModule,
-    FormsModule,
-    HttpModule,
-    AppRoutingModule
+    RouterModule.forRoot(appRoutes) //This import and function call allows the Module RouterModule to register all the routes and associated
+    // components we want for our app
   ],
-  providers: [ServersService],
-  bootstrap: [AppComponent]
+  exports: [RouterModule]
 })
-export class AppModule { }
+
+export class AppRoutingModule {
+
+}
