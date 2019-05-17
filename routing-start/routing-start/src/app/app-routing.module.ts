@@ -1,3 +1,6 @@
+import { ErrorPageComponent } from './error-page/error-page.component';
+import { CanDeactivateGuard } from './servers/edit-server/can-deactivate-guard.service';
+import { AuthGuard } from './auth-guard.service';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { UsersComponent } from './users/users.component';
@@ -15,13 +18,14 @@ const appRoutes: Routes = [
   {path: 'users', component: UsersComponent, children: [
     {path: ':id/:name', component: UserComponent},
   ]},
-  {path: 'servers', component: ServersComponent,
+  {path: 'servers', canActivateChild: [AuthGuard], component: ServersComponent,
   children: [
     {path: ':id', component: ServerComponent},
-    {path: ':id/edit', component: EditServerComponent}
+    {path: ':id/edit', component: EditServerComponent, canDeactivate: [CanDeactivateGuard]}
   ]},
   {path: '', component: HomeComponent},
-  {path: 'not-found', component: PageNotFoundComponent},
+  //{path: 'not-found', component: PageNotFoundComponent},
+  {path: 'not-found', component: ErrorPageComponent, data: {message: 'Page is not found'}},
   // '**' is the wild card route. It will match any route in your domain, unless caught by someone else first.
   {path: '**', redirectTo: '/not-found'} //make sure catch-all 404 route is bottom of the list.
 ];
