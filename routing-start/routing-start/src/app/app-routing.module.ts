@@ -10,6 +10,7 @@ import { ServerComponent } from './servers/server/server.component';
 import { EditServerComponent } from './servers/edit-server/edit-server.component';
 import { HomeComponent } from './home/home.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { ServerResolver } from './servers/server/server-resolver.service';
 
 //This is where we declare routes for the angular app.
 //Declared as const because it shouldn't be a dynamic thing. Won't ever change outside of development.
@@ -20,7 +21,7 @@ const appRoutes: Routes = [
   ]},
   {path: 'servers', canActivateChild: [AuthGuard], component: ServersComponent,
   children: [
-    {path: ':id', component: ServerComponent},
+    {path: ':id', component: ServerComponent, resolve: {server: ServerResolver} },
     {path: ':id/edit', component: EditServerComponent, canDeactivate: [CanDeactivateGuard]}
   ]},
   {path: '', component: HomeComponent},
