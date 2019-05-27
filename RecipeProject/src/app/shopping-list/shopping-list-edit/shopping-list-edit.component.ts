@@ -1,4 +1,4 @@
-import { ShoppingListService } from './../../shared/shoppinglist.service';
+import { ShoppingListService } from '../../shared/shoppinglist.service';
 import { Ingredient } from '../../shared/ingredient.model';
 import { Component, OnInit, ViewChild, ElementRef, Output, EventEmitter } from '@angular/core';
 
