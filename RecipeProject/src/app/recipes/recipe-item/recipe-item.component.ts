@@ -1,6 +1,6 @@
-import { RecipeService } from './../../shared/recipe.service';
+import { RecipeService } from '../../shared/recipe.service';
 import { Component, OnInit, Input, Output, EventEmitter  } from '@angular/core';
-import { Recipe } from '../recipe.model';
+import { Recipe } from '../../shared/recipe.model';
 
 @Component({
   selector: 'app-recipe-item',

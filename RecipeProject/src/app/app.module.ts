@@ -4,11 +4,12 @@ import {FormsModule} from '@angular/forms';
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
+import { RecipesComponent } from './recipes/recipes.component';
 import { ShoppingListComponent } from './header/shopping-list/shopping-list.component';
 import { ShoppingListEditComponent } from './header/shopping-list-edit/shopping-list-edit.component';
-import { RecipeListComponent } from './header/recipe-list/recipe-list.component';
-import { RecipeItemComponent } from './header/recipe-item/recipe-item.component';
-import { RecipeDetailComponent } from './header/recipe-detail/recipe-detail.component';
+import { RecipeListComponent } from './recipes/recipe-list/recipe-list.component';
+import { RecipeItemComponent } from './recipes/recipe-item/recipe-item.component';
+import { RecipeDetailComponent } from './recipes/recipe-detail/recipe-detail.component';
 import { DropdownDirective } from './shared/dropdown.directive';
 import { ShoppingListService } from './shared/shoppinglist.service';
 import { AppRoutingModule } from './app-routing.module';
@@ -20,6 +21,7 @@ import { RecipeEditComponent } from './recipes/recipe-edit/recipe-edit.component
   declarations: [
     AppComponent,
     HeaderComponent,
+    RecipesComponent,
     ShoppingListComponent,
     ShoppingListEditComponent,
     RecipeListComponent,

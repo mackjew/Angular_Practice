@@ -1,7 +1,7 @@
 
-import { Recipe } from '../header/recipe.model';
+import { Recipe } from './recipe.model';
 import { EventEmitter, Injectable } from '@angular/core';
-import { Ingredient } from '../header/ingredient.model';
+import { Ingredient } from './ingredient.model';
 import { ShoppingListService } from './shoppinglist.service';
 
 @Injectable()
