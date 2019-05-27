@@ -5,19 +5,6 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css']
 })
-export class HeaderComponent implements OnInit {
-  @Output() section = new EventEmitter<string>();
+export class HeaderComponent {
 
-  constructor() { }
-
-  ngOnInit() {
-  }
-
-  onRecipeClick(){
-    this.section.emit("recipe");
-  }
-
-  onShoppingListClick() {
-    this.section.emit("shoppingList");
-  }
 }
