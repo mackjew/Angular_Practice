@@ -11,4 +11,6 @@ export class Recipe {
     this.imagePath = imagePath;
     this.ingredients = ingredients;
   }
+
+
 }

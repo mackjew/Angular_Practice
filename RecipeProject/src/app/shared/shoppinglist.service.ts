@@ -1,9 +1,10 @@
+import { OnDestroy } from '@angular/core';
 
 import { Ingredient } from './ingredient.model';
 import { Subject } from 'rxjs';
 
 
-export class ShoppingListService {
+export class ShoppingListService implements OnDestroy {
   ingredientsChanged = new Subject<Ingredient[]>();
   startEditing = new Subject();
   private ingredients: Ingredient[] = [
@@ -40,5 +41,9 @@ export class ShoppingListService {
   deleteIngredient(index: number) {
     this.ingredients.splice(index, 1);
     this.ingredientsChanged.next(this.ingredients.slice());
+  }
+
+  ngOnDestroy() {
+    console.log('ShoppingListService destoryed!!!');
   }
 }

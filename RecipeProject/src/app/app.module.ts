@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
@@ -15,6 +15,7 @@ import { ShoppingListService } from './shared/shoppinglist.service';
 import { AppRoutingModule } from './app-routing.module';
 import { RecipeStartComponent } from './recipes/recipe-start/recipe-start.component';
 import { RecipeEditComponent } from './recipes/recipe-edit/recipe-edit.component';
+import { RecipeService } from './shared/recipe.service';
 
 
 @NgModule({
@@ -33,10 +34,14 @@ import { RecipeEditComponent } from './recipes/recipe-edit/recipe-edit.component
   ],
   imports: [
     BrowserModule,
+    ReactiveFormsModule,
     FormsModule,
     AppRoutingModule,
   ],
-  providers: [ShoppingListService],
+  //Adding RecipeService here means that the whole app gets the same instance of RecipeSErvice and that it does not get destroyed when the recipe component is closed
+  // This means that newly added/edited recipes changes will persist even if we navigate to shopping list component. However we cannot have RecipeService declared
+  //again further down in the app. Otherwise a new instance will be injected instead.
+  providers: [ShoppingListService, RecipeService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

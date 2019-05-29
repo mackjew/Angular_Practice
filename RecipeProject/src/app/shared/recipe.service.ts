@@ -1,12 +1,14 @@
 
 import { Recipe } from './recipe.model';
-import { Injectable } from '@angular/core';
+import { Injectable, OnDestroy } from '@angular/core';
 import { Ingredient } from './ingredient.model';
 import { ShoppingListService } from './shoppinglist.service';
+import { Subject } from 'rxjs';
 
 @Injectable()
 
-export class RecipeService {
+export class RecipeService implements OnDestroy {
+  recipesChanged = new Subject<Recipe[]>();
   private recipes: Recipe[] = [
     new Recipe(
       'Test Recipe',
@@ -64,4 +66,23 @@ export class RecipeService {
   //   }, this);
 
   // }
+
+  addRecipe(recipe: Recipe) {
+    this.recipes.push(recipe);
+    this.recipesChanged.next(this.recipes.slice());
+  }
+
+  updateRecipe(index: number, recipe: Recipe) {
+    this.recipes[index] = recipe;
+    this.recipesChanged.next(this.recipes.slice());
+  }
+
+  deleteRecipe(index: number) {
+    this.recipes.splice(index, 1);
+    this.recipesChanged.next(this.recipes.slice());
+  }
+
+  ngOnDestroy() {
+    console.log('Recipe Service was destroyed!');
+  }
 }

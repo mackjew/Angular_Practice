@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { Recipe } from '../../shared/recipe.model';
 import { RecipeService } from 'src/app/shared/recipe.service';
 import { ActivatedRoute, Router, Params } from '@angular/router';
+import { routerNgProbeToken } from '@angular/router/src/router_module';
 
 @Component({
   selector: 'app-recipe-detail',
@@ -30,5 +31,10 @@ export class RecipeDetailComponent implements OnInit {
   onEditRecipe() {
     this.router.navigate(['edit'], {relativeTo: this.curRoute});
     // this.router.navigate(['../', this.id, 'edit'], {relativeTo: this.curRoute});
+  }
+
+  onDeleteRecipe() {
+    this.recipeService.deleteRecipe(this.id);
+    this.router.navigate(['/']);
   }
 }
