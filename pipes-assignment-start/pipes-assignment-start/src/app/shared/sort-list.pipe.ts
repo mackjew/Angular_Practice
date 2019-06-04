@@ -8,7 +8,7 @@ export class SortListPipe implements PipeTransform {
 
   transform(value: { instanceType: string, name: string, status: string, started: Date}[] ) : { instanceType: string, name: string, status: string, started: Date}[] {
     const rtn = [];
-    return value.sort((a,b) => {
+    return value.sort((a, b) => {
       if(a.name < b.name) {
         return -1;
       }
