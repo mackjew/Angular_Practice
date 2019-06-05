@@ -1,35 +1,77 @@
-import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { Post } from './post.model';
+import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
+import {PostsService} from './posts.service';
+import { NgForm, FormGroup } from '@angular/forms';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, OnDestroy {
   loadedPosts = [];
+  isFetching = false;
+  error  = null;
+  @ViewChild('postForm', {static: true}) postForm: NgForm;
+  errorSub: Subscription;
 
-  constructor(private http: HttpClient) {}
+  constructor(private postsService: PostsService) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.isFetching = true;
+    this.postsService.fetchPosts().subscribe(
+      (posts) => {
+        this.isFetching = false;
+        this.loadedPosts = posts;
+      },
+      (error) => {
+        this.error = error.message;
+        console.log(error);
+      }
+    );
+    this.errorSub = this.postsService.error.subscribe(
+      (errorMessage) => {
+        this.error = errorMessage;
+      }
+    );
+  }
 
-  onCreatePost(postData: { title: string; content: string }) {
-    // Send Http request
-    this.http
-      .post(
-        'https://ng-complete-guide-c56d3.firebaseio.com/posts.json',
-        postData
-      )
-      .subscribe(responseData => {
-        console.log(responseData);
-      });
+  onCreatePost(postData: Post) {
+    this.postsService.createAndStorePost(postData.title, postData.content);
+    this.clearFields();
   }
 
   onFetchPosts() {
     // Send Http request
+    this.isFetching = true;
+    this.postsService.fetchPosts().subscribe(
+      (posts) => {
+        this.isFetching = false;
+        this.loadedPosts = posts;
+      },
+      (error) => {
+        this.error = error.message;
+        console.log(error);
+      }
+    );
   }
 
-  onClearPosts() {
+  onClearPosts(form: NgForm) {
     // Send Http request
+    this.postsService.deleteAllPosts().subscribe(
+      (responseData) => {
+        this.loadedPosts = [];
+        this.isFetching = false;
+      }
+    );
+  }
+
+  ngOnDestroy() {
+    this.errorSub.unsubscribe();
+  }
+
+  private clearFields() {
+    this.postForm.resetForm();
   }
 }
