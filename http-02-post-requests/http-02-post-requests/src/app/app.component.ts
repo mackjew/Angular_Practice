@@ -1,8 +1,9 @@
 import { Post } from './post.model';
 import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import {PostsService} from './posts.service';
-import { NgForm, FormGroup } from '@angular/forms';
+import { NgForm } from '@angular/forms';
 import { Subscription } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-root',
@@ -12,7 +13,7 @@ import { Subscription } from 'rxjs';
 export class AppComponent implements OnInit, OnDestroy {
   loadedPosts = [];
   isFetching = false;
-  error  = null;
+  error = null;
   @ViewChild('postForm', {static: true}) postForm: NgForm;
   errorSub: Subscription;
 
@@ -27,6 +28,7 @@ export class AppComponent implements OnInit, OnDestroy {
       },
       (error) => {
         this.error = error.message;
+        this.isFetching = false;
         console.log(error);
       }
     );
@@ -51,6 +53,7 @@ export class AppComponent implements OnInit, OnDestroy {
         this.loadedPosts = posts;
       },
       (error) => {
+        this.isFetching = false;
         this.error = error.message;
         console.log(error);
       }
@@ -73,5 +76,9 @@ export class AppComponent implements OnInit, OnDestroy {
 
   private clearFields() {
     this.postForm.resetForm();
+  }
+
+  public onHandleError() {
+    this.error = null;
   }
 }

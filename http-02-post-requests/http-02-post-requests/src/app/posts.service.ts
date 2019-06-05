@@ -1,8 +1,8 @@
 import {Injectable} from '@angular/core'
-import {map} from 'rxjs/operators';
-import { HttpClient } from '@angular/common/http';
+import {map, catchError} from 'rxjs/operators';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Post } from './post.model';
-import { Subject } from 'rxjs';
+import { Subject, throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +15,13 @@ export class PostsService {
   createAndStorePost(title: string, content: string) {
     const postData: Post = {title: title, content: content}
     // the .json at the end of the url is a firebase-only requirement. Not required by REST or Angular
-    this.http.post<{name: string, content: string}>('https://ng-guided-project.firebaseio.com/posts.json', postData).subscribe(
+    this.http.post<{name: string, content: string}>(
+      'https://ng-guided-project.firebaseio.com/posts.json',
+      postData,
+      {
+        headers: new HttpHeaders({'Custom-Header': 'Hello'})
+      }
+    ).subscribe(
       (responseData) => {
         console.log(responseData);
       },
@@ -35,7 +41,12 @@ export class PostsService {
           }
         }
         return postsArray;
-      }));
+      }),
+      catchError((errorRes) => { //catchError is meant to be used with the pipe() function, and can be an alternative way to deal with errors.
+        //do some error handling logic
+        return throwError(errorRes);
+      })
+    );
   }
 
   deleteAllPosts() {
