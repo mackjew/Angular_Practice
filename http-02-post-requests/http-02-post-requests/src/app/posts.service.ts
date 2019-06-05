@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core'
-import {map, catchError} from 'rxjs/operators';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import {map, catchError, tap} from 'rxjs/operators';
+import { HttpClient, HttpHeaders, HttpParams, HttpEventType } from '@angular/common/http';
 import { Post } from './post.model';
 import { Subject, throwError } from 'rxjs';
 
@@ -19,7 +19,7 @@ export class PostsService {
       'https://ng-guided-project.firebaseio.com/posts.json',
       postData,
       {
-        headers: new HttpHeaders({'Custom-Header': 'Hello'})
+        observe: 'response'
       }
     ).subscribe(
       (responseData) => {
@@ -32,7 +32,16 @@ export class PostsService {
   }
 
   fetchPosts() {
-    return this.http.get<{ [key: string]: Post}>('https://ng-guided-project.firebaseio.com/posts.json').pipe(
+    let searchParams = new HttpParams();
+    searchParams = searchParams.append('print', 'pretty');
+    searchParams = searchParams.append('custom', 'key');
+    return this.http.get<{ [key: string]: Post}>(
+      'https://ng-guided-project.firebaseio.com/posts.json',
+      {
+        headers: new HttpHeaders({'Custom-Header': 'Hello'}),
+        params: searchParams
+      }
+    ).pipe(
       map((responseData) => {
         const postsArray: Post[] = [];
         for(const key in responseData) {
@@ -50,6 +59,21 @@ export class PostsService {
   }
 
   deleteAllPosts() {
-    return this.http.delete('https://ng-guided-project.firebaseio.com/posts.json');
+    return this.http.delete(
+      'https://ng-guided-project.firebaseio.com/posts.json',
+      {
+        observe: 'events'
+      }
+    ).pipe(
+      tap(
+        (event) => {
+          console.log(event);
+          if(event.type == HttpEventType.Sent)
+            console.log(event);
+          if(event.type == HttpEventType.Response)
+            console.log(event.body);
+        }
+      )
+    );
   }
 }
