@@ -6,6 +6,7 @@ import { RecipesComponent } from './recipes/recipes.component';
 import { RecipeDetailComponent } from './recipes/recipe-detail/recipe-detail.component';
 import { RecipeEditComponent } from './recipes/recipe-edit/recipe-edit.component';
 import { RecipeStartComponent } from './recipes/recipe-start/recipe-start.component';
+import { RecipeResolverService } from './shared/recipes-resolver.service';
 
 const appRoutes: Routes = [
   {path: 'recipes', component: RecipesComponent, children:
@@ -13,8 +14,8 @@ const appRoutes: Routes = [
         { path: '', component: RecipeStartComponent },
         { path: 'new', component: RecipeEditComponent },
         //need to order routes with dynamic parameters after static routes
-        { path: ':id', component: RecipeDetailComponent },
-        { path: ':id/edit', component: RecipeEditComponent },
+        { path: ':id', component: RecipeDetailComponent, resolve: [RecipeResolverService] },
+        { path: ':id/edit', component: RecipeEditComponent, resolve: [RecipeResolverService] },
       ]
   },
   { path: 'shopping-list', component: ShoppingListComponent },
